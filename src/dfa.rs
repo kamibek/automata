@@ -28,4 +28,13 @@ where
     }
 
     pub fn initial(&self) -> TState{ self._initial}
+
+    pub fn accepting(&self) -> &HashSet<TState>{ &self._accepting}
+
+    pub fn is_accepting(&self, state: &TState) -> bool{ self._accepting.contains(state)}
+    
+    pub fn next(&self, state: TState, symbol: TAlphabet) -> TState{
+        (self._delta)(state, symbol)
+    }
+    
 }
