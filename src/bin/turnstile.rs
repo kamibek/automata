@@ -34,7 +34,7 @@ fn main() {
     let mut current = turnstile.initial();
 
     loop {
-        print!("\nChoose Transition Mode: [1] Standard [2] Extended [q] Quit: ");
+        print!("\n\x1b[32mChoose Transition Mode: [1] Standard [2] Extended [q] Quit: \x1b[0m");
         io::stdout().flush().unwrap();
         
         let mut mode_input = String::new();
@@ -50,11 +50,11 @@ fn main() {
             }
         };
 
-        println!("\nInitial state: {:?}", current);
+        println!("\nInitial state: {:?}\n\n", current);
         
         if selected_mode == TransitionMode::Standard {
             loop {
-                print!("\nChoose Action: [1] Coin  [2] Push  [q] Back to Mode Selection: ");
+                print!("\n\x1b[33mChoose Action: [1] Coin  [2] Push  [q] Back to Mode Selection: \x1b[0m");
                 io::stdout().flush().unwrap();
 
                 let mut captured = String::new();
