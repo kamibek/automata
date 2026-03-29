@@ -1,30 +1,28 @@
-use std::env;
-use automata::dfa;
+use automata::dfa::{DFA};
+use std::collections::HashSet;
 
-#[derive(Debug, Hash, Eq, PartialEq)]
+#[derive(Debug, Hash, Eq, Copy, Clone, PartialEq)]
 pub enum State{
-    Locked,
-    Unlocked,
+    Locked = 0,
+    Unlocked = 1,
 }
 
 #[derive(Debug, Hash, Eq, PartialEq)]
 pub enum Action{
-    Coin,
-    Push,
+    Coin = 0,
+    Push = 1,
 }
 
-pub fn delta(state: State, action: Action) -> State{
-    match (state, action) {
-        (State::Locked, Action::Push) => State::Locked,
-        (State::Locked, Action::Coin) => State::Unlocked,
-        (State::Unlocked, Action::Push) => State::Locked,
-        (State::Unlocked, Action::Coin) => State::Unlocked,
-        _ => {
-            panic!("something went wrong")
-        }
-    }
-}
+pub const TRANSITION_TABLE: [[State; 2]; 2] = [
+    [State::Unlocked, State::Locked],
+    [State::Unlocked, State::Locked]
+];
+
 fn main(){
+    let delta = |state: State, action: Action|{
+        TRANSITION_TABLE[state as usize][action as usize]
+    };
+
     let turnstile = DFA::new(State::Locked, HashSet::from([State::Unlocked]), delta);
     let current = turnstile.initial();
     println!("{:?}", current);
