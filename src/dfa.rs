@@ -36,5 +36,13 @@ where
     pub fn next(&self, state: TState, symbol: TAlphabet) -> TState{
         (self._delta)(state, symbol)
     }
+
+    pub fn run(&self, input: impl IntoIterator<Item = TAlphabet>) -> TState{
+        let mut current = self._initial;
+        for symbol in input{
+            current = self.next(current, symbol);
+        }
+        current
+    }
     
 }
